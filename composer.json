@@ -1,0 +1,66 @@
+{
+  "name": "ranabd36/larathereum",
+  "description": "Ethereum Client Library For Laravel",
+  "keywords": [
+    "ethereum",
+    "ethereum client",
+    "erc20",
+    "smart contract",
+    "laravel package"
+  ],
+  "homepage": "https://github.com/ranabd36/larathereum",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Ibrahim Al Naz Rana",
+      "email": "ranabd36@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.1",
+    "ext-bcmath": "*",
+    "graze/guzzle-jsonrpc": "^3.2",
+    "phlib/base_convert": "^1.0",
+    "web3p/rlp": "~0.2.1",
+    "web3p/ethereum-util": "~0.1.1",
+    "kornrunner/keccak": "~1",
+    "simplito/elliptic-php": "1.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Larathereum\\": "src"
+    },
+    "files": [
+      "helpers/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Larathereum\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Larathereum\\LarathereumServiceProvider"
+      ],
+      "aliases": {
+        "Eth": "Larathereum\\Facades\\EthFacade",
+        "Web3": "Larathereum\\Facades\\Web3Facade",
+        "Personal": "Larathereum\\Facades\\PersonalFacade",
+        "Util": "Larathereum\\Facades\\UtilFacade",
+        "Shh": "Larathereum\\Facades\\ShhFacade",
+        "Net": "Larathereum\\Facades\\NetFacade",
+        "Contract": "Larathereum\\Facades\\ContractFacade"
+      }
+    }
+  }
+}
