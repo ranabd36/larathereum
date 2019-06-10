@@ -85,7 +85,7 @@ class LarathereumServiceProvider extends ServiceProvider
 
     private function getClient()
     {
-        $url = $this->app['config']['larathereum']['host'] . ":" . $this->app['config']['larathereum']['port'];
+        $url = $this->app['config']['larathereum']['url'];
         return Client::factory($url);
     }
 
