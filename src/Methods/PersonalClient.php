@@ -2,9 +2,9 @@
 
 namespace Larathereum\Methods;
 
-use Larathereum\Contracts\Types\Address;
-use Larathereum\Contracts\Types\Transaction;
-use Larathereum\Contracts\Types\TransactionHash;
+use Larathereum\Types\Address;
+use Larathereum\Types\Transaction;
+use Larathereum\Types\TransactionHash;
 
 class PersonalClient extends AbstractMethods
 {
