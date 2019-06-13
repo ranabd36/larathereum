@@ -13,6 +13,14 @@ namespace Larathereum\Methods;
 
 use InvalidArgumentException;
 use kornrunner\Keccak;
+use Larathereum\Contracts\Ethabi;
+use Larathereum\Contracts\Types\Address;
+use Larathereum\Contracts\Types\Boolean;
+use Larathereum\Contracts\Types\Bytes;
+use Larathereum\Contracts\Types\DynamicBytes;
+use Larathereum\Contracts\Types\Integer;
+use Larathereum\Contracts\Types\Str;
+use Larathereum\Contracts\Types\Uinteger;
 use phpseclib\Math\BigInteger as BigNumber;
 use stdClass;
 
@@ -512,5 +520,26 @@ class Util
             }
         }
         return $json;
+    }
+
+    public static function decodeInput($input)
+    {
+        $ethabi = new Ethabi([
+            'address' => new Address,
+            'bool' => new Boolean,
+            'bytes' => new Bytes,
+            'dynamicBytes' => new DynamicBytes,
+            'int' => new Integer,
+            'string' => new Str,
+            'uint' => new Uinteger,
+        ]);
+
+        if (strlen($input) % 64 === 10) {
+            $input = str_replace(substr($input, 0, 10), '', $input);
+            return $ethabi->decodeParameters(['address', 'uint256'], $input);
+        }
+
+        return [];
+
     }
 }

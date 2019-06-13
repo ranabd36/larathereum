@@ -16,9 +16,9 @@ class Wei
         return $this->amount;
     }
 
-    public function toEther(): string
+    public function toEther($scale = 18): string
     {
-        return bcdiv($this->amount, "1000000000000000000", 18);
+        return bcdiv($this->amount, "1000000000000000000", $scale);
     }
 
     public function toString()

@@ -2,12 +2,15 @@
 
 namespace Larathereum\Types;
 
+use Larathereum\Facades\Util;
+
 class TransactionInfo
 {
     private $blockHash;
     private $blockNumber;
     private $from;
     private $to;
+    private $contractAddress;
     private $gas;
     private $gasPrice;
     private $hash;
@@ -27,6 +30,8 @@ class TransactionInfo
         if ($response['to']) {
             $this->to = new Address($response['to']);
         }
+
+        $this->contractAddress = null;
         $this->gas = hexdec($response['gas']);
         $this->gasPrice = new Wei(hexdec($response['gasPrice']));
         $this->hash = new TransactionHash($response['hash']);
@@ -37,6 +42,13 @@ class TransactionInfo
         $this->v = $response['v'];
         $this->r = $response['r'];
         $this->s = $response['s'];
+
+        $input = Util::decodeInput($response['input']);
+        if (!empty($input)) {
+            $this->contractAddress = new ContractAddress($this->to);
+            $this->to = new Address($input[0]);
+            $this->value = new Wei($input[1]);
+        }
     }
 
     public function blockHash(): BlockHash
@@ -57,6 +69,11 @@ class TransactionInfo
     public function to(): ?Address
     {
         return $this->to;
+    }
+
+    public function contractAddress(): ?ContractAddress
+    {
+        return $this->contractAddress;
     }
 
     public function gas(): int
