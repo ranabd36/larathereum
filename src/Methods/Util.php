@@ -11,6 +11,7 @@
 
 namespace Larathereum\Methods;
 
+use Exception;
 use InvalidArgumentException;
 use kornrunner\Keccak;
 use Larathereum\Contracts\Ethabi;
@@ -273,7 +274,7 @@ class Util
      * keccak256
      * @param string $value
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public static function sha3($value)
     {
@@ -344,9 +345,9 @@ class Util
      * @param $scale
      * @return void
      */
-    public static function toEther($number, $scale =18)
+    public static function toEther($number, $scale = 18)
     {
-        return bcdiv(self::toBn($number), self::UNITS['ether'], $scale);
+        return bcdiv(self::toBn($number), str_pad('1', $scale + 1, '0', STR_PAD_RIGHT), $scale);
     }
 
     /**
