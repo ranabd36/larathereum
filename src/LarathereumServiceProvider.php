@@ -26,12 +26,9 @@ class LarathereumServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('larathereum.php'),
-            ], 'config');
-        }
+        $this->publishes([
+            __DIR__ . '/../config/config.php' => config_path('larathereum.php'),
+        ], 'config');
     }
 
     /**
@@ -96,7 +93,7 @@ class LarathereumServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['eth', 'net', 'personal', 'shh', 'util', 'web3','contract', EthClient::class, NetClient::class, PersonalClient::class, ShhClient::class, Util::class, Web3Client::class, ContractClient::class];
+        return ['eth', 'net', 'personal', 'shh', 'util', 'web3', 'contract', EthClient::class, NetClient::class, PersonalClient::class, ShhClient::class, Util::class, Web3Client::class, ContractClient::class];
     }
 
 }
