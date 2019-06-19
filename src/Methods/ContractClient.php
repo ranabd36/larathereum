@@ -322,32 +322,9 @@ class ContractClient extends AbstractMethods
             }
 
             $transaction = $this->getTransaction($arguments, $method);
+
             return Eth::sendTransaction($transaction);
         }
-    }
-
-    /**
-     * call
-     * Call function method.
-     *
-     * @param mixed
-     * @return void
-     */
-    public function call()
-    {
-        if (isset($this->functions)) {
-            $arguments = func_get_args();
-            $method = array_splice($arguments, 0, 1)[0];
-
-            if (!is_string($method)) {
-                throw new InvalidArgumentException('Please make sure the method is string.');
-            }
-
-            $transaction = $this->getTransaction($arguments, $method);
-            $response =  Eth::call($transaction, new BlockNumber());
-            return current($this->ethabi->decodeParameters($this->function, $response));
-        }
-        return null;
     }
 
     protected function getTransaction($arguments, $method)
@@ -399,6 +376,30 @@ class ContractClient extends AbstractMethods
         $transaction->to = new \Larathereum\Types\Address($this->toAddress);
         $transaction->data = $functionSignature . Util::stripZero($data);
         return $transaction;
+    }
+
+    /**
+     * call
+     * Call function method.
+     *
+     * @param mixed
+     * @return void
+     */
+    public function call()
+    {
+        if (isset($this->functions)) {
+            $arguments = func_get_args();
+            $method = array_splice($arguments, 0, 1)[0];
+
+            if (!is_string($method)) {
+                throw new InvalidArgumentException('Please make sure the method is string.');
+            }
+
+            $transaction = $this->getTransaction($arguments, $method);
+            $response = Eth::call($transaction, new BlockNumber());
+            return current($this->ethabi->decodeParameters($this->function, $response));
+        }
+        return null;
     }
 
     /**

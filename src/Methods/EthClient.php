@@ -136,6 +136,7 @@ class EthClient extends AbstractMethods
             $this->client->request(1, 'eth_getUncleCountByBlockHash', [$hash->toString()])
         );
         return hexdec($response->getRpcResult());
+
     }
 
     public function getUncleCountByBlockNumber(BlockNumber $blockNumber): int

@@ -46,28 +46,28 @@ class TransactionInfo
 
         $input = Util::decodeInput($response['input']);
         if (!empty($input)) {
-           if($input[0] == 'transfer'){
-               $this->contractAddress = new ContractAddress($this->to);
-               if (AddressValidator::validate($input[1])) {
-                   $this->to = new Address($input[1]);
-               }
-               if ($input[2]->toString() > 0) {
-                   $this->value = new Wei($input[2]);
-               }
+            if ($input[0] == 'transfer') {
+                $this->contractAddress = new ContractAddress($this->to);
+                if (AddressValidator::validate($input[1])) {
+                    $this->to = new Address($input[1]);
+                }
+                if ($input[2]->toString() > 0) {
+                    $this->value = new Wei($input[2]);
+                }
 
-           }elseif ($input[0] == 'signedTransfer'){
-               $this->contractAddress = new ContractAddress($this->to);
-               if (AddressValidator::validate($input[1])) {
-                   $this->from = new Address($input[1]);
-               }
+            } elseif ($input[0] == 'signedTransfer') {
+                $this->contractAddress = new ContractAddress($this->to);
+                if (AddressValidator::validate($input[1])) {
+                    $this->from = new Address($input[1]);
+                }
 
-               if (AddressValidator::validate($input[2])) {
-                   $this->to = new Address($input[2]);
-               }
-               if ($input[3]->toString() > 0) {
-                   $this->value = new Wei($input[3]);
-               }
-           }
+                if (AddressValidator::validate($input[2])) {
+                    $this->to = new Address($input[2]);
+                }
+                if ($input[3]->toString() > 0) {
+                    $this->value = new Wei($input[3]);
+                }
+            }
         }
     }
 

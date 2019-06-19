@@ -3,7 +3,6 @@
 namespace Larathereum\Methods;
 
 use Larathereum\Types\Address;
-use Larathereum\Types\Hash;
 use Larathereum\Types\Transaction;
 use Larathereum\Types\TransactionHash;
 
@@ -62,7 +61,7 @@ class PersonalClient extends AbstractMethods
         );
         return $response->getRpcResult();
     }
-    
+
     public function ecRecover(string $message, string $signature): TransactionHash
     {
         $response = $this->client->send(
