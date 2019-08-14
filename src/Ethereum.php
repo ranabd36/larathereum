@@ -26,7 +26,7 @@ class Ethereum
             'shh' => new ShhClient($this->client),
             'web3' => new Web3Client($this->client),
             'personal' => new PersonalClient($this->client),
-            'contract' => new ContractClient(),
+            'contract' => new ContractClient($this->client),
             'utils' => new Util()
         ];
     }
