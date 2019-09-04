@@ -73,7 +73,6 @@ class ContractClient extends AbstractMethods
 
     /**
      * eth
-     *
      * @var Eth
      */
     protected $eth;
@@ -151,7 +150,6 @@ class ContractClient extends AbstractMethods
             throw new InvalidArgumentException('Please make sure address is valid.');
         }
         $this->toAddress = AddressFormatter::format($address);
-
         return $this;
     }
 
@@ -217,7 +215,6 @@ class ContractClient extends AbstractMethods
             }
         }
         $this->abi = $abiArray;
-
         return $this;
     }
 
@@ -300,7 +297,7 @@ class ContractClient extends AbstractMethods
 
             $transaction->data = '0x' . $this->bytecode . Util::stripZero($data);
 
-            return Eth::sendTransaction($transaction);
+            return (new EthClient($this->client))->sendTransaction($transaction);
         }
     }
 
@@ -323,7 +320,7 @@ class ContractClient extends AbstractMethods
 
             $transaction = $this->getTransaction($arguments, $method);
 
-            return Eth::sendTransaction($transaction);
+            return (new EthClient($this->client))->sendTransaction($transaction);
         }
     }
 
@@ -394,9 +391,8 @@ class ContractClient extends AbstractMethods
             if (!is_string($method)) {
                 throw new InvalidArgumentException('Please make sure the method is string.');
             }
-
             $transaction = $this->getTransaction($arguments, $method);
-            $response = Eth::call($transaction, new BlockNumber());
+            $response = (new EthClient($this->client))->call($transaction, new BlockNumber());
             return current($this->ethabi->decodeParameters($this->function, $response));
         }
         return null;
@@ -442,7 +438,7 @@ class ContractClient extends AbstractMethods
                 $transaction = $this->getTransaction($arguments, $method);
             }
 
-            return Eth::estimateGas($transaction);
+            return (new EthClient($this->client))->estimateGas($transaction);
         }
         return null;
     }
