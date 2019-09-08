@@ -313,14 +313,14 @@ class ContractClient extends AbstractMethods
         if (isset($this->functions)) {
             $arguments = func_get_args();
             $method = array_splice($arguments, 0, 1)[0];
+            $passphrase = array_pop($arguments);
 
             if (!is_string($method)) {
                 throw new InvalidArgumentException('Please make sure the method is string.');
             }
 
             $transaction = $this->getTransaction($arguments, $method);
-
-            return (new EthClient($this->client))->sendTransaction($transaction);
+            return (new PersonalClient($this->client))->sendTransaction($transaction, $passphrase);
         }
     }
 
