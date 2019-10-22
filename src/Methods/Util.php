@@ -143,14 +143,18 @@ class Util
                     throw new InvalidArgumentException('toBn number must be a valid number.');
                 }
                 $whole = $comps[0];
-                $fraction = $comps[1];
+                $fraction = intval($comps[1]);
 
-                return [
-                    new BigNumber($whole),
-                    new BigNumber($fraction),
-                    strlen($comps[1]),
-                    isset($negative1) ? $negative1 : false
-                ];
+                if ($fraction) {
+                    return [
+                        new BigNumber($whole),
+                        new BigNumber($fraction),
+                        strlen($comps[1]),
+                        isset($negative1) ? $negative1 : false
+                    ];
+                }
+
+                $bn = new BigNumber($whole);
             } else {
                 $bn = new BigNumber($number);
             }
