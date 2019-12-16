@@ -20,7 +20,7 @@ class Wei
                 throw new \Exception('Invalid scientific notation.');
             }
 
-            return str_pad(intval($comps[0]), $comps[1], '0', STR_PAD_RIGHT);
+            return str_pad(intval($comps[0]), $comps[1] + 1, '0', STR_PAD_RIGHT);
         }
 
         return $amount;
