@@ -19,7 +19,11 @@ class Wei
             if (count($comps) > 2 || count($comps) < 2 ) {
                 throw new \Exception('Invalid scientific notation.');
             }
-
+            
+            if (preg_match('/./', $comps[0], $match)) {
+                $comps[0] = str_replace('.','',$comps[0]);
+            }
+            
             return str_pad(intval($comps[0]), $comps[1] + 1, '0', STR_PAD_RIGHT);
         }
 
