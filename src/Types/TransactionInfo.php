@@ -45,7 +45,7 @@ class TransactionInfo
         $this->s = $response['s'];
 
         $input = Util::decodeInput($response['input']);
-        if (!empty($input)) {
+        if (!empty($input) && !is_null($this->to)) {
             if ($input[0] == 'transfer') {
                 $this->contractAddress = new ContractAddress($this->to);
                 if (AddressValidator::validate($input[1])) {
