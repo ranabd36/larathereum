@@ -59,12 +59,12 @@ class EthClient extends AbstractMethods
         return hexdec($response->getRpcResult());
     }
 
-    public function gasPrice(): Wei
+    public function gasPrice(): ?Wei
     {
         $response = $this->client->send(
             $this->client->request(73, 'eth_gasPrice', [])
         );
-        return new Wei(hexdec($response->getRpcResult()));
+        return ($response->getRpcResult()) ? new Wei(hexdec($response->getRpcResult())) : null;
     }
 
     /**
@@ -90,12 +90,12 @@ class EthClient extends AbstractMethods
         return hexdec($response->getRpcResult());
     }
 
-    public function getBalance(Address $address, BlockNumber $blockNumber): Wei
+    public function getBalance(Address $address, BlockNumber $blockNumber): ?Wei
     {
         $response = $this->client->send(
             $this->client->request(1, 'eth_getBalance', [$address->toString(), $blockNumber->toString()])
         );
-        return new Wei(\Phlib\base_convert($response->getRpcResult(), 16, 10));
+        return ($response->getRpcResult()) ? new Wei(\Phlib\base_convert($response->getRpcResult(), 16, 10)) : null;
     }
 
     public function getStorageAt(Address $address, int $quantity, BlockNumber $blockNumber): string
@@ -164,20 +164,20 @@ class EthClient extends AbstractMethods
         return $response->getRpcResult();
     }
 
-    public function sendTransaction(Transaction $transaction): TransactionHash
+    public function sendTransaction(Transaction $transaction): ?TransactionHash
     {
         $response = $this->client->send(
             $this->client->request(1, 'eth_sendTransaction', [$transaction->toArray()])
         );
-        return new TransactionHash($response->getRpcResult());
+        return ($response->getRpcResult()) ? new TransactionHash($response->getRpcResult()) : null;
     }
 
-    public function sendRawTransaction(string $data): TransactionHash
+    public function sendRawTransaction(string $data): ?TransactionHash
     {
         $response = $this->client->send(
             $this->client->request(1, 'eth_sendRawTransaction', [$data])
         );
-        return new TransactionHash($response->getRpcResult());
+        return ($response->getRpcResult()) ? new TransactionHash($response->getRpcResult()) : null;
     }
 
     public function call(Transaction $transaction, BlockNumber $blockNumber): string
