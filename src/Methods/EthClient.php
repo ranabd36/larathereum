@@ -95,7 +95,9 @@ class EthClient extends AbstractMethods
         $response = $this->client->send(
             $this->client->request(1, 'eth_getBalance', [$address->toString(), $blockNumber->toString()])
         );
-        return ($response->getRpcResult()) ? new Wei(\Phlib\base_convert($response->getRpcResult(), 16, 10)) : null;
+
+        $amount = ($response->getRpcResult()) ? \Phlib\base_convert($response->getRpcResult(), 16, 10) : 0;
+        return new Wei($amount);
     }
 
     public function getStorageAt(Address $address, int $quantity, BlockNumber $blockNumber): string
